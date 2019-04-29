@@ -56,6 +56,7 @@ class BaseModel:
         """updates the instance using a dictionary of kwargs"""
         for k, v in kwargs.items():
             setattr(self, k, v)
+        self.save()
 
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
