@@ -52,6 +52,11 @@ class BaseModel:
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
                                          self.__dict__)
 
+    def update(self, *args, **kwargs):
+        """updates the instance using a dictionary of kwargs"""
+        for k, v in kwargs.items():
+            setattr(self, k, v)
+
     def save(self):
         """updates the attribute 'updated_at' with the current datetime"""
         self.updated_at = datetime.utcnow()
