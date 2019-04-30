@@ -52,9 +52,11 @@ class BaseModel:
         return "[{:s}] ({:s}) {}".format(self.__class__.__name__, self.id,
                                          self.__dict__)
 
-    def update(self, *args, **kwargs):
+    def update(self, ignore, *args, **kwargs):
         """updates the instance using a dictionary of kwargs"""
         for k, v in kwargs.items():
+            if k in ignore:
+                continue
             setattr(self, k, v)
         self.save()
 

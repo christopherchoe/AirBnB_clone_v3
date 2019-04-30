@@ -15,7 +15,8 @@ from models.state import State
 def state():
     """handles states route"""
     if request.method == 'GET':
-        return jsonify([ obj.to_dict() for obj in storage.all("State").values()])
+        return jsonify(
+            [obj.to_dict() for obj in storage.all("State").values()])
     if request.method == 'POST':
         post_data = request.get_json()
         if post_data is None or type(post_data) != dict:
@@ -27,7 +28,11 @@ def state():
         new_state.save()
         return jsonify(new_state.to_dict()), 201
 
-@app_views.route('/states/<string:state_id>', methods=['GET', 'DELETE', 'PUT'], strict_slashes=False)
+
+@app_views.route(
+    '/states/<string:state_id>',
+    methods=['GET', 'DELETE', 'PUT'],
+    strict_slashes=False)
 def state_with_id(state_id):
     """handles states route with a parameter state_id"""
     state = storage.get("State", state_id)
@@ -41,5 +46,6 @@ def state_with_id(state_id):
         put_data = request.get_json()
         if put_data is None or type(put_data) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
-        state.update(**put_data)
+        to_ignore = ['id', 'created_at', 'updated_at']
+        state.update(to_ignore, **put_data)
         return jsonify(state.to_dict()), 200
