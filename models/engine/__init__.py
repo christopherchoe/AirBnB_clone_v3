@@ -1,2 +1,2 @@
 #!/usr/bin/python3
-"""init file for lib""
+"""init file for lib"""
