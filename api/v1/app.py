@@ -10,9 +10,11 @@ import os
 app = Flask(__name__)
 app.register_blueprint(app_views)
 
+
 def page_not_found(e):
     """404 error json response"""
     return jsonify({'error': "Not found"}), 404
+
 
 @app.teardown_appcontext
 def teardown_appcontext(exc=None):
@@ -20,9 +22,11 @@ def teardown_appcontext(exc=None):
     """
     storage.close()
 
+
 if __name__ == "__main__":
     """run the app if the script is not being imported
     """
+    app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
     app.register_error_handler(404, page_not_found)
     fetched_host = os.environ.get('HBNB_API_HOST')
     fetched_port = os.environ.get('HBNB_API_PORT')
