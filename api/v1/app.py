@@ -3,12 +3,14 @@
 """
 from flask import Flask
 from flask import jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
+CORS(app)
 
 
 def page_not_found(e):
