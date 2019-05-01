@@ -13,6 +13,7 @@ def service_status():
         holberton checker """
     return jsonify({'status': 'OK'})
 
+
 @app_views.route('/stats', strict_slashes=False)
 def object_stats():
     """returns the count of object types"""
