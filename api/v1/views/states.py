@@ -42,6 +42,7 @@ def state_with_id(state_id):
         return jsonify(state.to_dict())
     if request.method == 'DELETE':
         storage.delete(state)
+        storage.save()
         return jsonify({}), 200
     if request.method == 'PUT':
         put_data = request.get_json()

@@ -52,6 +52,8 @@ def place_with_id(place_id):
     if request.method == 'GET':
         return jsonify(place.to_dict())
     if request.method == 'DELETE':
+        storage.delete(place)
+        storage.save()
         return jsonify({}), 200
     if request.method == 'PUT':
         put_data = request.get_json()
