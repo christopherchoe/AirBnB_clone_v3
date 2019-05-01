@@ -56,6 +56,6 @@ def user_with_id(user_id):
         put_data = request.get_json()
         if put_data is None or type(put_data) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
-        to_ignore = ['id', 'created_at', 'updated_at']
+        to_ignore = ['id', 'created_at', 'updated_at', 'email']
         user.update(to_ignore, **put_data)
         return jsonify(user.to_dict()), 200
