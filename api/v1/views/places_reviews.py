@@ -38,7 +38,7 @@ def reviews(place_id):
         my_user = storage.get("User", user_id)
         if my_user is None:
             abort(404)
-        
+
         text = post_data.get('text')
         if text is None:
             return jsonify({'error': 'Missing text'}), 400
