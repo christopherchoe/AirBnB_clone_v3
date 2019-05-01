@@ -41,6 +41,7 @@ def amenity_with_id(amenity_id):
     if request.method == 'GET':
         return jsonify(amenity.to_dict())
     if request.method == 'DELETE':
+        storage.delete(amenity)
         return jsonify({}), 200
     if request.method == 'PUT':
         put_data = request.get_json()
