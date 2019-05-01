@@ -8,48 +8,48 @@ from flask import Flask
 from flask import request
 from flask import abort
 from models import storage
-from models.state import State
-from models.city import City
+from models.user import User
 
 
 @app_views.route(
-    '/states/<string:state_id>/cities',
+    '/users',
     methods=['GET', 'POST'],
     strict_slashes=False)
-def states_cities(state_id):
+def users():
     """handles states route"""
-    my_state = storage.get("State", state_id)
-    if my_state is None:
-        abort(404)
+    my_users = storage.all("User")
 
     if request.method == 'GET':
         return jsonify(
-            [obj.to_dict() for obj in my_state.cities])
+            [obj.to_dict() for obj in my_users.values()])
     if request.method == 'POST':
         post_data = request.get_json()
         if post_data is None or type(post_data) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
-        new_name = post_data.get('name')
-        if new_name is None:
-            return jsonify({'error': 'Missing name'}), 400
-        new_state = City(name=new_name, state_id=state_id)
-        new_state.save()
-        return jsonify(new_state.to_dict()), 201
+        email = post_data.get('email')
+        if email is None:
+            return jsonify({'error': 'Missing email'}), 400
+        password = post_data.get('password')
+        if password is None:
+            return jsonify({'error': 'Missing password'}), 400
+        new_user = User(email=email, password=password)
+        new_user.save()
+        return jsonify(new_user.to_dict()), 201
 
 
 @app_views.route(
-    '/cities/<string:city_id>',
+    '/users/<string:user_id>',
     methods=['GET', 'DELETE', 'PUT'],
     strict_slashes=False)
-def city_with_id(city_id):
+def user_with_id(user_id):
     """handles states route with a parameter state_id"""
-    city = storage.get("City", city_id)
-    if city is None:
+    user = storage.get("User", user_id)
+    if user is None:
         abort(404)
     if request.method == 'GET':
-        return jsonify(city.to_dict())
+        return jsonify(user.to_dict())
     if request.method == 'DELETE':
-        storage.delete(city)
+        storage.delete(user)
         storage.save()
         return jsonify({}), 200
     if request.method == 'PUT':
@@ -57,5 +57,5 @@ def city_with_id(city_id):
         if put_data is None or type(put_data) != dict:
             return jsonify({'error': 'Not a JSON'}), 400
         to_ignore = ['id', 'created_at', 'updated_at']
-        city.update(to_ignore, **put_data)
-        return jsonify(city.to_dict()), 200
+        user.update(to_ignore, **put_data)
+        return jsonify(user.to_dict()), 200
