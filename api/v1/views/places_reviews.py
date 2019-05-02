@@ -42,7 +42,7 @@ def reviews(place_id):
         text = post_data.get('text')
         if text is None:
             return jsonify({'error': 'Missing text'}), 400
-        new_review = Review(place_id=place_id, user_id=user_id, text=text)
+        new_review = Review(place_id=place_id, **post_data)
         new_review.save()
         return jsonify(new_review.to_dict()), 201
 

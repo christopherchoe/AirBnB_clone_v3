@@ -17,7 +17,7 @@ from models.amenity import Amenity
     '/places/<string:place_id>/amenities',
     methods=['GET'],
     strict_slashes=False)
-def place_amenity():
+def place_amenity(place_id):
     """handles amenities route"""
     place = storage.get("Place", place_id)
     if place is None:
@@ -31,7 +31,7 @@ def place_amenity():
     '/places/<string:place_id>/amenities/<string:amenity_id>',
     methods=['POST'],
     strict_slashes=False)
-def place_amenity_post(amenity_id):
+def place_amenity_post(place_id, amenity_id):
     place = storage.get("Place", place_id)
     amenity = storage.get("Amenity", amenity_id)
     if place is None or amenity is None:
@@ -42,10 +42,10 @@ def place_amenity_post(amenity_id):
 
 
 @app_views.route(
-    '/amenities/<string:amenity_id>',
+    'places/<string:place_id>/amenities/<string:amenity_id>',
     methods=['DELETE'],
     strict_slashes=False)
-def place_amenity_with_id(amenity_id):
+def place_amenity_with_id(place_id, amenity_id):
     """handles amenities route with a parameter amenity_id"""
     amenity = storage.get("Amenity", amenity_id)
     place = storage.get("Place", place_id)

@@ -24,7 +24,7 @@ def amenity():
         new_name = post_data.get('name')
         if new_name is None:
             return jsonify({'error': 'Missing name'}), 400
-        new_amenity = Amenity(name=new_name)
+        new_amenity = Ameninity(**post_data)
         new_amenity.save()
         return jsonify(new_amenity.to_dict()), 201
 

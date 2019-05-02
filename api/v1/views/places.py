@@ -35,7 +35,7 @@ def place(city_id):
             abort(404)
         if new_name is None:
             return jsonify({'error': 'Missing name'}), 400
-        new_place = Place(city_id=city_id, name=new_name, user_id=new_user)
+        new_place = Place(city_id=city_id, **post_data)
         new_place.save()
         return jsonify(new_place.to_dict()), 201
 
