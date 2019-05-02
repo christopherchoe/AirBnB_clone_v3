@@ -10,7 +10,7 @@ import os
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
-CORS(app)
+CORS(app, resources={r'/*': {'origins': '0.0.0.0'}})
 
 
 def page_not_found(e):
