@@ -67,6 +67,7 @@ def place_amenity_with_id(place_id, amenity_id):
         place.amenities
         if amenity_id in place.amenity_ids:
             place.amenity_ids.pop(amenity_id)
-    storage.delete(amenity)
+    else:
+        place.amenities.remove(amenity)
     storage.save()
     return jsonify({}), 200
