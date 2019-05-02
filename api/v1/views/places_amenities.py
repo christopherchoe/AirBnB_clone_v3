@@ -41,11 +41,12 @@ def place_amenity_post(place_id, amenity_id):
         place.amenities
         if amenity_id not in place.amenity_ids:
             in_list_fs = False
-    if amenities.place_id == place_id and in_list_fs:
+    if amenity in place.amenities and in_list_fs:
         return jsonify(amenity.to_dict()), 200
-    setattr(amenity, 'place_id', place_id)
     if getev('HBNB_TYPE_STORAGE') != 'db':
         place.amenity_ids.append(amenity_id)
+    else:
+        place.amenities.append(amenity)
     storage.save()
     return jsonify(amenity.to_dict()), 201
 
@@ -66,6 +67,6 @@ def place_amenity_with_id(place_id, amenity_id):
         if amenity_id in place.amenity_ids:
             place.amenity_ids.pop(amenity_id)
     elif amenity in place.amenities:
-            place.amenities.remove(amenity)
+        place.amenities.remove(amenity)
     storage.save()
     return jsonify({}), 200
