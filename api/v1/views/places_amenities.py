@@ -38,11 +38,12 @@ def place_amenity_post(place_id, amenity_id):
         abort(404)
     if amenities.place_id == place_id:
         return jsonify(amenity.to_dict()), 200
+    setattr(amenity, 'place_id', place_id)
     return jsonify(amenity.to_dict()), 201
 
 
 @app_views.route(
-    'places/<string:place_id>/amenities/<string:amenity_id>',
+    '/places/<string:place_id>/amenities/<string:amenity_id>',
     methods=['DELETE'],
     strict_slashes=False)
 def place_amenity_with_id(place_id, amenity_id):
