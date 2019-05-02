@@ -131,7 +131,7 @@ class TestFileStorage(unittest.TestCase):
         """Test that count properly counts when given wrong type"""
         self.assertFalse(models.storage.count({'hi': 'bye'}))
 
-        def test_get_type_id(self):
+    def test_get_type_id(self):
         """tests get when type of id is wrong"""
         self.assertEqual(models.storage.get("State", []), None)
 
