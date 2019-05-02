@@ -27,11 +27,12 @@ class User(BaseModel, Base):
         last_name = ""
 
     def __setattr__(self, name, value):
+        """custom setattr for user to overwrite password as hashed version
+        """
         if name == 'password' and type(value) == str:
             self.password = hashlib.md5(value.encode('utf-8')).digest()
         else:
             super.__setattr__(self, name, value)
-        
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
