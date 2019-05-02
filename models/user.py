@@ -6,6 +6,8 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.hybrid import hybrid_property
+import hashlib
 
 
 class User(BaseModel, Base):
@@ -24,10 +26,12 @@ class User(BaseModel, Base):
         first_name = ""
         last_name = ""
 
-    @property
-    def password(self):
-        return hashlib.md5(password.encode()) 
-
+    def __setattr__(self, name, value):
+        if name == 'password' and type(value) == str:
+            self.password = hashlib.md5(value.encode('utf-8')).digest()
+        else:
+            super.__setattr__(self, name, value)
+        
 
     def __init__(self, *args, **kwargs):
         """initializes user"""
