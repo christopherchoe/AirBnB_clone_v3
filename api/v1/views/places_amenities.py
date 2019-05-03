@@ -38,7 +38,6 @@ def place_amenity_post(place_id, amenity_id):
         abort(404)
     in_list_fs = True
     if getenv('HBNB_TYPE_STORAGE') != 'db':
-        place.amenities
         if amenity_id not in place.amenity_ids:
             in_list_fs = False
     if amenity in place.amenities and in_list_fs:
@@ -61,7 +60,7 @@ def place_amenity_with_id(place_id, amenity_id):
     place = storage.get("Place", place_id)
     if place is None or amenity is None:
         abort(404)
-    if amenity.place_id != place_id:
+    if amenity not in place.amenities:
         abort(404)
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         if amenity_id in place.amenity_ids:
