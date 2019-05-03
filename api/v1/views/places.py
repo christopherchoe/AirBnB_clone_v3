@@ -7,6 +7,7 @@ from flask import jsonify
 from flask import Flask
 from flask import request
 from flask import abort
+from os import getenv
 from models import storage
 from models.place import Place
 
@@ -81,20 +82,20 @@ def places_search():
     state_ids = post_data.get('states')
     city_ids = post_data.get('cities')
     amen_ids = post_data.get('amenities')
-    if not states and not cities and not amenities:
+    if not state_ids and not city_ids and not amenity_ids:
         return jsonify([place.to_dict() for place in storage.all("Place")])
-    for c in cities:
+    for c in city:
         if c.id in city_ids or c.state_id in state_ids:
             for p in c.places:
                 if p.to_dict() not in places_search:
                     places_search.append(p.to_dict())
-    for p in places:
+    for p in place:
         all_match = True
-        if getenv('HBNB_TYPE_STORAGE') != 'db':
+        if getenv('HBNB_TYPE_STORAGE') != 'db' and amen_ids is not None:
             for ids in amen_ids:
                 if ids not in p.amenity_ids:
                     all_match = False
-        else:
+        elif amen_ids is not None:
             for ids in amen_ids:
                 cur_amenity = storage.get('Amenity', ids)
                 if cur_amenity is None or cur_amenity not in p.amenities:
