@@ -76,14 +76,22 @@ def places_search():
     if post_data is None or type(post_data) != dict:
         return jsonify({'error': 'Not a JSON'}), 400
     if len(post_data) == 0:
-        return jsonify([place.to_dict() for place in storage.all("Place")])
+        return jsonify(
+            [place.to_dict() for place in storage.all("Place").values()])
     city = storage.all('City').values()
     place = storage.all('Place').values()
     state_ids = post_data.get('states')
+    if state_ids is None:
+        state_ids = []
     city_ids = post_data.get('cities')
+    if city_ids is None:
+        city_ids = []
     amen_ids = post_data.get('amenities')
+    if amen_ids is None:
+        amen_ids = []
     if not state_ids and not city_ids and not amenity_ids:
-        return jsonify([place.to_dict() for place in storage.all("Place")])
+        return jsonify(
+            [place.to_dict() for place in storage.all("Place").values()])
     for c in city:
         if c.id in city_ids or c.state_id in state_ids:
             for p in c.places:
@@ -91,11 +99,11 @@ def places_search():
                     places_search.append(p.to_dict())
     for p in place:
         all_match = True
-        if getenv('HBNB_TYPE_STORAGE') != 'db' and amen_ids is not None:
+        if getenv('HBNB_TYPE_STORAGE') != 'db':
             for ids in amen_ids:
                 if ids not in p.amenity_ids:
                     all_match = False
-        elif amen_ids is not None:
+        else:
             for ids in amen_ids:
                 cur_amenity = storage.get('Amenity', ids)
                 if cur_amenity is None or cur_amenity not in p.amenities:
