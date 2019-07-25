@@ -1,3 +1,5 @@
+This is the third version of the iterative AirBnB Clone project which aims to emulate the AirBnB search and filtering. To see the previous version please visit [AirBnB Clone v2](https://github.com/christopherchoe/AirBnB_clone_v2)
+
 # AirBnB Clone - The Console
 The console is the first segment of the AirBnB project at Holberton School that will collectively cover fundamental concepts of higher level programming. The goal of AirBnB project is to eventually deploy our server a simple copy of the AirBnB Website(HBnB). A command interpreter is created in this segment to manage objects for the AirBnB(HBnB) website.
 
@@ -156,6 +158,7 @@ No known bugs at this time.
 ## Authors
 Alexa Orrico - [Github](https://github.com/alexaorrico) / [Twitter](https://twitter.com/alexa_orrico)  
 Jennifer Huang - [Github](https://github.com/jhuang10123) / [Twitter](https://twitter.com/earthtojhuang)
+
 Bennett Dixon - [Github](https://github.com/bennettdixon) / [Twitter](https://twitter.com/bennett_32)
 Chris Choe - [Github](https://github.com/christopherchoe) / [Twitter](https://twitter.com/chchchoe)
 
